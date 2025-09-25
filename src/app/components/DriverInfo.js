@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import BetModal from './BetModal'; // make sure this path is correct
+import BetModal from './BetModal'; 
 
 export default function DriverInfo({ driver, raceId }) {
   const [isModalOpen, setIsModalOpen] = useState(false);

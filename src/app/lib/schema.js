@@ -1,17 +1,20 @@
-import { mysqlTable, serial, text, float, int } from "drizzle-orm/mysql-core";
+import { mysqlTable, serial, text, float, int, date } from "drizzle-orm/mysql-core";
+
 
 export const races = mysqlTable("races", {
-  id: serial("id").primaryKey(),
+  id: serial("race_id").primaryKey(), // MySQL column is race_id
   name: text("name").notNull(),
-  date: text("date").notNull(),
-  location: text("location").notNull(),
+  date: date("date").notNull(),
+  circuit: text("circuit").notNull(),
 });
 
+
 export const drivers = mysqlTable("drivers", {
-  id: serial("id").primaryKey(),
+  id: serial("driver_id").primaryKey(),
   name: text("name").notNull(),
   team: text("team").notNull(),
 });
+
 
 export const odds = mysqlTable("odds", {
   id: serial("id").primaryKey(),
@@ -19,6 +22,7 @@ export const odds = mysqlTable("odds", {
   driver_id: int("driver_id").references(() => drivers.id),
   odd: float("odd").notNull(),
 });
+
 
 export const bets = mysqlTable("bets", {
   id: serial("id").primaryKey(),
