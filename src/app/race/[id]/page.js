@@ -4,7 +4,10 @@ import DriverInfo from "@components/DriverInfo";
 import { eq } from "drizzle-orm";
 
 export default async function RacePage({ params }) {
-  const raceId = parseInt(params.id, 10);
+  // ✅ Await params so Next.js doesn't complain
+  const { id } = await params;
+  const raceId = parseInt(id, 10);
+
   if (Number.isNaN(raceId)) return <p>Invalid race ID.</p>;
 
   const race = await db
@@ -26,8 +29,8 @@ export default async function RacePage({ params }) {
     .innerJoin(odds, eq(odds.driver_id, drivers.id))
     .where(eq(odds.race_id, raceId));
 
-  if (raceDrivers.length === 0) return <p>No drivers or odds found for this race.</p>;
-
+  if (raceDrivers.length === 0)
+    return <p>No drivers or odds found for this race.</p>;
 
   const raceDate =
     race.date instanceof Date
@@ -37,7 +40,9 @@ export default async function RacePage({ params }) {
   return (
     <main style={{ padding: "2rem", fontFamily: "sans-serif" }}>
       <h2>{race.name}</h2>
-      <p>{raceDate} – {race.location}</p>
+      <p>
+        {raceDate} – {race.location}
+      </p>
 
       {raceDrivers.map((driver) => (
         <DriverInfo

@@ -25,7 +25,7 @@ export const odds = mysqlTable("odds", {
 
 
 export const bets = mysqlTable("bets", {
-  id: serial("id").primaryKey(),
+  id: serial("bet_id").primaryKey(), // map Drizzle `id` to MySQL `bet_id`
   race_id: int("race_id").references(() => races.id),
   driver_id: int("driver_id").references(() => drivers.id),
   amount: float("amount").notNull(),
